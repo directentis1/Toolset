@@ -1,0 +1,22 @@
+{
+  "autoUpdateSettings": {
+    "downloadedUpdateVersion": "0.0.0",
+    "disabled": true
+  },
+  "firstUsage": "Sat, 24 Jun 2023 01:18:52 GMT",
+  "firstUsageOfVersion": {
+    "date": "Sat, 24 Jun 2023 01:18:56 GMT",
+    "version": "4.3.1"
+  },
+  "windowsState": {
+    "main": {
+      "x": 0,
+      "y": 27,
+      "width": 1600,
+      "height": 768,
+      "isMaximized": true
+    }
+  },
+  "lastLogs": 1687569599285,
+  "firstSignIn": "Sat, 24 Jun 2023 01:19:59 GMT"
+}
