@@ -7,7 +7,11 @@
 FROM thuonghai2711/ubuntu-novnc-pulseaudio:22.04
 WORKDIR /var/lib/apt/lists/partial
 RUN sudo add-apt-repository ppa:wireshark-dev/stable -y
-RUN sudo apt-get update && sudo apt-get install -y libglib2.0-0  libnss3  libatk1.0-0  libatk-bridge2.0-0  cups libdrm2  libgtk-3-0  libgbm1 libasound2 git openssh-server openssh-client ca-certificates libsecret-1-0 libsecret-common
+RUN sudo apt-get update && sudo apt-get install -y libglib2.0-0  libnss3  libatk1.0-0  libatk-bridge2.0-0  cups libdrm2  libgtk-3-0  libgbm1 libasound2 git openssh-server openssh-client ca-certificates libsecret-1-0 libsecret-common bash iproute2 libpcap-dev libusb-1.0-0-dev libnetfilter-queue-dev wireless-tools firefox libu2f-udev file-roller nano
+
+## Get and install latest chrome browser
+RUN cd /tmp && wget -c https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb && sudo dpkg -i google-chrome-stable_current_amd64.deb
+
 
 # Add Fidder-everywhere 
 ##  Fidder-everywhere directory can get by extract Fiddler-everywhere for Linux AppImage with command `./Fidder.AppImage --appimage-extract && mv sq* fidder-everywhere`
@@ -25,12 +29,12 @@ RUN sudo chown -R ubuntu:ubuntu /home/ubuntu/apps
 RUN sudo rm -rf /tmp/*
 
 ## Download BurpSuite pro and its LoaderKeygen
-RUN sudo mkdir -p /home/ubuntu/apps/BurpSuite && sudo wget "https://portswigger-cdn.net/burp/releases/download?product=pro&version=2023.6.1&type=Jar" -O /home/ubuntu/apps/BurpSuite/burpsuite_pro_v2023.6.1.jar && burploader_latest_release_url=$(curl -s -H "Accept: application/vnd.github+json" https://api.github.com/repos/h3110w0r1d-y/BurpLoaderKeygen/releases/latest | grep 'browser_' | cut -d\" -f4 | awk 'NR==1') && sudo wget "$burploader_latest_release_url" -P /home/ubuntu/apps/BurpSuite/ && sudo chown -R ubuntu:ubuntu /home/ubuntu/apps/BurpSuite
+RUN sudo mkdir -p /home/ubuntu/apps/BurpSuite && sudo wget "https://portswigger-cdn.net/burp/releases/download?product=pro&version=2023.6.2&type=Jar" -O /home/ubuntu/apps/BurpSuite/burpsuite_pro_v2023.6.2.jar && burploader_latest_release_url=$(curl -s -H "Accept: application/vnd.github+json" https://api.github.com/repos/h3110w0r1d-y/BurpLoaderKeygen/releases/latest | grep 'browser_' | cut -d\" -f4 | awk 'NR==1') && sudo wget "$burploader_latest_release_url" -P /home/ubuntu/apps/BurpSuite/ && sudo chown -R ubuntu:ubuntu /home/ubuntu/apps/BurpSuite
 RUN sudo -u ubuntu echo "oracle64-17.0.7" >> /home/ubuntu/apps/BurpSuite/.java-version
 
 # Add mitmproxy
 RUN sudo -u ubuntu wget "https://downloads.mitmproxy.org/9.0.1/mitmproxy-9.0.1-linux.tar.gz" -P /tmp/
-RUN sudo -u ubuntu mkdir /home/ubuntu/apps/mitmproxy && sudo -u ubuntu tar -xf /tmp/mitmproxy-*.tar.gz -C /home/ubuntu/apps/mitmproxy && rm -f /tmp/*
+RUN sudo -u ubuntu mkdir /home/ubuntu/apps/mitmproxy && sudo -u ubuntu tar -xf /tmp/mitmproxy-*.tar.gz -C /home/ubuntu/apps/mitmproxy && sudo rm -rf /tmp/*
 
 # Add Charles
 RUN wget -qO- https://www.charlesproxy.com/packages/apt/charles-repo.asc | sudo tee /etc/apt/keyrings/charles-repo.asc && sudo sh -c 'echo deb [signed-by=/etc/apt/keyrings/charles-repo.asc] https://www.charlesproxy.com/packages/apt/ charles-proxy main > /etc/apt/sources.list.d/charles.list' && sudo apt-get update && sudo apt-get install charles-proxy
@@ -44,6 +48,10 @@ RUN sudo -u ubuntu chmod 755 /home/ubuntu/apps/httptoolkit_installer.sh
 # Add Wireshark placehodler
 RUN sudo -u ubuntu touch /home/ubuntu/apps/Wireshark
 
+# Add Bettercap
+RUN sudo wget https://github.com/directentis1/bettercap/releases/download/v2.32.0-dev/bettercap -O /usr/local/bin/bettercap && sudo chmod 755 /usr/local/bin/bettercap
+RUN sudo bettercap -eval "caplets.update; ui.update; q"
+
 ### Postman ###
 RUN sudo -u ubuntu wget https://gist.githubusercontent.com/directentis1/eaf809a6bdd82bc8500964c195b16ee6/raw/a0972ccd4419c4ecd0fa3c8d7b2c4a5dd120bbf1/postman_installer.sh -P /home/ubuntu/apps/
 RUN sudo -u ubuntu chmod 755 /home/ubuntu/apps/postman_installer.sh
@@ -54,5 +62,9 @@ RUN sudo -u ubuntu chmod 755 /home/ubuntu/apps/postman_installer.sh
 WORKDIR /tmp/
 RUN curl https://getcroc.schollz.com | sudo bash && wget -qO - portal.spatiumportae.com | sudo bash && wormholers_latest_release_url=$(curl -s -H "Accept: application/vnd.github+json" https://api.github.com/repos/magic-wormhole/magic-wormhole.rs/releases/latest | grep 'browser_' | cut -d\" -f4 | awk 'NR==1') && sudo wget -O /usr/local/bin/wormhole-rs "$wormholers_latest_release_url" && sudo chmod 755 /usr/local/bin/wormhole-rs
 
-# Return to root directory
+# Post-stage
+## Cleaning
+sudo bash /opt/bin/apt_clean.sh
+
+## Return to root directory
 WORKDIR /
