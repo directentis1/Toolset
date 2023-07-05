@@ -64,7 +64,7 @@ RUN curl https://getcroc.schollz.com | sudo bash && wget -qO - portal.spatiumpor
 
 # Post-stage
 ## Cleaning
-RUN sudo bash /opt/bin/apt_clean.sh
+RUN sudo apt-get autoclean -y && sudo apt-get autoremove -y && sudo rm -rf /var/lib/apt/lists/* /var/cache/apt/*
 
 ## Return to root directory
 WORKDIR /
