@@ -10,7 +10,7 @@ RUN sudo add-apt-repository ppa:wireshark-dev/stable -y
 RUN sudo apt-get update && sudo apt-get install -y libglib2.0-0  libnss3  libatk1.0-0  libatk-bridge2.0-0  cups libdrm2  libgtk-3-0  libgbm1 libasound2 git openssh-server openssh-client ca-certificates libsecret-1-0 libsecret-common bash iproute2 libpcap-dev libusb-1.0-0-dev libnetfilter-queue-dev wireless-tools firefox libu2f-udev file-roller nano
 
 ## Get and install latest chrome browser
-RUN cd /tmp && wget -c https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb && sudo dpkg -i google-chrome-stable_current_amd64.deb
+RUN cd /tmp && wget -c https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb && sudo dpkg -i google-chrome-stable_current_amd64.deb || sudo apt install --fix-broken -y
 
 
 # Add Fidder-everywhere 
