@@ -7,7 +7,7 @@
 FROM thuonghai2711/ubuntu-novnc-pulseaudio:22.04
 WORKDIR /var/lib/apt/lists/partial
 RUN sudo add-apt-repository ppa:wireshark-dev/stable -y
-RUN sudo apt-get update && sudo apt-get install -y --no-install-recommends libglib2.0-0  libnss3  libatk1.0-0  libatk-bridge2.0-0  cups libdrm2  libgtk-3-0  libgbm1 libasound2 git openssh-server openssh-client ca-certificates libsecret-1-0 libsecret-common bash iproute2 libpcap-dev libusb-1.0-0-dev libnetfilter-queue-dev wireless-tools firefox libu2f-udev file-roller nano && bash /opt/bin/apt_clean.sh
+RUN sudo apt-get update && sudo apt-get install -y --no-install-recommends libglib2.0-0  libnss3  libatk1.0-0  libatk-bridge2.0-0  cups libdrm2  libgtk-3-0  libgbm1 libasound2 git openssh-server openssh-client ca-certificates libsecret-1-0 libsecret-common bash iproute2 libpcap-dev libusb-1.0-0-dev libnetfilter-queue-dev wireless-tools firefox libu2f-udev file-roller nano && sudo apt-get autoclean -y && sudo apt-get autoremove -y && sudo rm -rf /var/cache/apt/*
 
 ## Get and install latest chrome browser
 RUN cd /tmp && wget -c https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb && sudo apt-get install ./google-chrome-stable_current_amd64.deb -y && sudo rm -rf /tmp/*
@@ -28,7 +28,7 @@ RUN cd /tmp/ && wget https://download.oracle.com/java/17/latest/jdk-17_linux-x64
 RUN sudo -u ubuntu mkdir -p /home/ubuntu/.jenv/versions && sudo chown ubuntu:ubuntu /var/lib/apt/lists/partial && sudo -E -u ubuntu /home/ubuntu/.jenv/bin/jenv add /opt/jdk-17.0.7/
 
 ## Download BurpSuite pro and its LoaderKeygen
-RUN sudo -u ubuntu mkdir -p /home/ubuntu/apps/BurpSuite && sudo -u ubuntu wget "https://portswigger-cdn.net/burp/releases/download?product=pro&version=2023.7&type=Jar" -O /home/ubuntu/apps/BurpSuite/burpsuite_pro_v2023.7.jar && burploader_latest_release_url=$(curl -s -H "Accept: application/vnd.github+json" https://api.github.com/repos/h3110w0r1d-y/BurpLoaderKeygen/releases/latest | grep 'browser_' | cut -d\" -f4 | awk 'NR==1') && sudo -u ubuntu wget "$burploader_latest_release_url" -P /home/ubuntu/apps/BurpSuite/ 
+RUN sudo -u ubuntu mkdir -p /home/ubuntu/apps/BurpSuite && burpsuite_pro_latest_version=$(curl -s https://portswigger.net/burp/releases | grep -oP "Professional \/ Community \K([\d\.]+)" | head -n 1) && sudo -u ubuntu wget "https://portswigger-cdn.net/burp/releases/download?product=pro&version=${burpsuite_pro_latest_version}&type=Jar" -O /home/ubuntu/apps/BurpSuite/burpsuite_pro_v${burpsuite_pro_latest_version}.jar && burploader_latest_release_url=$(curl -s -H "Accept: application/vnd.github+json" https://api.github.com/repos/h3110w0r1d-y/BurpLoaderKeygen/releases/latest | grep 'browser_' | cut -d\" -f4 | awk 'NR==1') && sudo -u ubuntu wget "$burploader_latest_release_url" -P /home/ubuntu/apps/BurpSuite/ 
 #** sudo chown -R ubuntu:ubuntu /home/ubuntu/apps/BurpSuite **# --> It'll be took as the same as storage of the BurpSuite folder after do that command, so it'll better if I do combine it with the command above
 RUN sudo -u ubuntu echo "oracle64-17.0.7" >> /home/ubuntu/apps/BurpSuite/.java-version
 
