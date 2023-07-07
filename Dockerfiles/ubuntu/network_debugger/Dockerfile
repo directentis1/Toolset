@@ -55,9 +55,9 @@ RUN sudo bettercap -eval "caplets.update; ui.update; q"
 # Add nmap
 WORKDIR /tmp/
 ## Download nmap rpm packages from their website
-RUN bash -c <(curl -sSL https://gist.githubusercontent.com/directentis1/5dc79a9f8115d00daa518ffc0768ae2f/raw/664ce27eec53aacb875846ffd8ed388af7e2a40a/nmap_downloader)
+RUN bash -c "$(curl -sSL https://gist.githubusercontent.com/directentis1/5dc79a9f8115d00daa518ffc0768ae2f/raw/664ce27eec53aacb875846ffd8ed388af7e2a40a/nmap_downloader)"
 ## Convert them to debian packages, install them and clean the leftovers
-RUN bash -c <(curl -sSL https://gist.githubusercontent.com/directentis1/486bf0f995bb938a7d4fcdec8e96a22e/raw/9e487561943e79ee3d628d56590d7b8aab6612fe/nmap_debian_installer)
+RUN bash -c "$(curl -sSL https://gist.githubusercontent.com/directentis1/486bf0f995bb938a7d4fcdec8e96a22e/raw/9e487561943e79ee3d628d56590d7b8aab6612fe/nmap_debian_installer)"
 
 ### Postman ###
 RUN sudo -u ubuntu wget https://gist.githubusercontent.com/directentis1/eaf809a6bdd82bc8500964c195b16ee6/raw/a0972ccd4419c4ecd0fa3c8d7b2c4a5dd120bbf1/postman_installer.sh -P /home/ubuntu/apps/
