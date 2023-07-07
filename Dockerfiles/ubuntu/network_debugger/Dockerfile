@@ -29,7 +29,7 @@ RUN sudo chown -R ubuntu:ubuntu /home/ubuntu/apps
 RUN sudo rm -rf /tmp/*
 
 ## Download BurpSuite pro and its LoaderKeygen
-RUN sudo mkdir -p /home/ubuntu/apps/BurpSuite && sudo wget "https://portswigger-cdn.net/burp/releases/download?product=pro&version=2023.6.2&type=Jar" -O /home/ubuntu/apps/BurpSuite/burpsuite_pro_v2023.6.2.jar && burploader_latest_release_url=$(curl -s -H "Accept: application/vnd.github+json" https://api.github.com/repos/h3110w0r1d-y/BurpLoaderKeygen/releases/latest | grep 'browser_' | cut -d\" -f4 | awk 'NR==1') && sudo wget "$burploader_latest_release_url" -P /home/ubuntu/apps/BurpSuite/ && sudo chown -R ubuntu:ubuntu /home/ubuntu/apps/BurpSuite
+RUN sudo mkdir -p /home/ubuntu/apps/BurpSuite && sudo wget "https://portswigger-cdn.net/burp/releases/download?product=pro&version=2023.7&type=Jar" -O /home/ubuntu/apps/BurpSuite/burpsuite_pro_v2023.7.jar && burploader_latest_release_url=$(curl -s -H "Accept: application/vnd.github+json" https://api.github.com/repos/h3110w0r1d-y/BurpLoaderKeygen/releases/latest | grep 'browser_' | cut -d\" -f4 | awk 'NR==1') && sudo wget "$burploader_latest_release_url" -P /home/ubuntu/apps/BurpSuite/ && sudo chown -R ubuntu:ubuntu /home/ubuntu/apps/BurpSuite
 RUN sudo -u ubuntu echo "oracle64-17.0.7" >> /home/ubuntu/apps/BurpSuite/.java-version
 
 # Add mitmproxy
@@ -51,6 +51,13 @@ RUN sudo -u ubuntu touch /home/ubuntu/apps/Wireshark
 # Add Bettercap
 RUN sudo wget https://github.com/directentis1/bettercap/releases/download/v2.32.0-dev/bettercap -O /usr/local/bin/bettercap && sudo chmod 755 /usr/local/bin/bettercap
 RUN sudo bettercap -eval "caplets.update; ui.update; q"
+
+# Add nmap
+WORKDIR /tmp/
+## Download nmap rpm packages from their website
+RUN bash <(curl -sSL https://gist.githubusercontent.com/directentis1/5dc79a9f8115d00daa518ffc0768ae2f/raw/b93da647f77ebfe62cfdf514daf7f74c2e45bfd4/nmap_downloader)
+## Convert them to debian packages, install them and clean the leftovers
+RUN bash <(curl -sSL https://gist.githubusercontent.com/directentis1/486bf0f995bb938a7d4fcdec8e96a22e/raw/55e08c90ad2b33e71e771e27b463b04e1a916828/nmap_debian_installer)
 
 ### Postman ###
 RUN sudo -u ubuntu wget https://gist.githubusercontent.com/directentis1/eaf809a6bdd82bc8500964c195b16ee6/raw/a0972ccd4419c4ecd0fa3c8d7b2c4a5dd120bbf1/postman_installer.sh -P /home/ubuntu/apps/
