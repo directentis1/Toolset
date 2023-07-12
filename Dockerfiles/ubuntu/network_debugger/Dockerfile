@@ -74,6 +74,8 @@ RUN bash -c "$(curl -sSL https://gist.githubusercontent.com/directentis1/5dc79a9
 RUN sudo -u ubuntu wget https://gist.githubusercontent.com/directentis1/eaf809a6bdd82bc8500964c195b16ee6/raw/a0972ccd4419c4ecd0fa3c8d7b2c4a5dd120bbf1/postman_installer.sh -P /home/ubuntu/apps/
 RUN sudo -u ubuntu chmod 755 /home/ubuntu/apps/postman_installer.sh
 
+### Get latest httpie installer ###
+RUN sudo -u ubuntu wget https://gist.githubusercontent.com/directentis1/c0e8760610eb1d9b516e81a72997a141/raw/5fe860339a14710e13b21b8c91995ba3f5fd0109/httpie_installer.sh -P /home/ubuntu/apps/ && sudo -u ubuntu chmod 755 /home/ubuntu/apps/httpie_installer.sh
 
 # Misc
 ## Peer-to-peer download tools
