@@ -81,6 +81,9 @@ RUN sudo -u ubuntu chmod 755 /home/ubuntu/apps/postman_installer.sh
 ### Get latest httpie installer ###
 RUN sudo -u ubuntu wget https://gist.githubusercontent.com/directentis1/c0e8760610eb1d9b516e81a72997a141/raw/5fe860339a14710e13b21b8c91995ba3f5fd0109/httpie_installer.sh -P /home/ubuntu/apps/ && sudo -u ubuntu chmod 755 /home/ubuntu/apps/httpie_installer.sh
 
+### Get latest insomnia installer ###
+RUN sudo -u ubuntu wget https://gist.githubusercontent.com/directentis1/53132758a47aaff2490bec2b6de0ecad/raw/992905152f6a58e81fed04b622cc9cfac47730e7/insomnia_installer.sh -P /home/ubuntu/apps && sudo -u ubuntu chmod 755 /home/ubuntu/apps/insomnia_installer.sh
+
 # Misc
 ## Peer-to-peer download tools
 WORKDIR /tmp/
