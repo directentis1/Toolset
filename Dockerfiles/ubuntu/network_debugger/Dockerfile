@@ -36,7 +36,7 @@ RUN wget https://api.getfiddler.com/linux/latest-linux -O fidder-everywhere-late
 # Add Burp Suite Pro 
 ## Install jenv tool and download oracle java-17 and add it with jenv
 RUN sudo -u ubuntu git clone https://github.com/jenv/jenv.git /home/ubuntu/.jenv && sudo -u ubuntu echo 'export PATH="$HOME/.jenv/bin:$PATH"' >> /home/ubuntu/.bash_profile && sudo -u ubuntu echo 'eval "$(jenv init -)"' >> /home/ubuntu/.bash_profile
-RUN cd /tmp/ && wget https://download.oracle.com/java/17/latest/jdk-17_linux-x64_bin.tar.gz && sudo tar -xf *.gz -C /opt/ && sudo chmod -R 755 /opt/jdk-17.0.7 && rm -f *.gz
+RUN cd /tmp/ && wget https://download.oracle.com/java/17/latest/jdk-17_linux-x64_bin.tar.gz && sudo tar -xf jdk-17_linux-x64_bin.tar.gz -C /opt/ && sudo chmod -R 755 /opt/jdk-17.0.7 && rm -f *.gz
 RUN sudo -u ubuntu mkdir -p /home/ubuntu/.jenv/versions && sudo chown ubuntu:ubuntu /var/lib/apt/lists/partial && sudo -E -u ubuntu /home/ubuntu/.jenv/bin/jenv add /opt/jdk-17.0.7/
 
 ## Download latest BurpSuite pro and its LoaderKeygen
