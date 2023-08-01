@@ -36,8 +36,8 @@ RUN wget https://api.getfiddler.com/linux/latest-linux -O fidder-everywhere-late
 # Add Burp Suite Pro 
 ## Install jenv tool and download oracle java-17 and add it with jenv
 RUN sudo -u ubuntu git clone https://github.com/jenv/jenv.git /home/ubuntu/.jenv && sudo -u ubuntu echo 'export PATH="$HOME/.jenv/bin:$PATH"' >> /home/ubuntu/.bash_profile && sudo -u ubuntu echo 'eval "$(jenv init -)"' >> /home/ubuntu/.bash_profile
-RUN cd /tmp/ && wget https://download.oracle.com/java/17/latest/jdk-17_linux-x64_bin.tar.gz && sudo tar -xf jdk-17_linux-x64_bin.tar.gz -C /opt/ && sudo chmod -R 755 /opt/jdk-17.0.7 && rm -f *.gz
-RUN sudo -u ubuntu mkdir -p /home/ubuntu/.jenv/versions && sudo chown ubuntu:ubuntu /var/lib/apt/lists/partial && sudo -E -u ubuntu /home/ubuntu/.jenv/bin/jenv add /opt/jdk-17.0.7/
+RUN cd /tmp/ && wget https://download.oracle.com/java/17/latest/jdk-17_linux-x64_bin.tar.gz && sudo tar -xf jdk-17_linux-x64_bin.tar.gz -C /opt/ && sudo chmod -R 755 /opt/jdk-17.0.8 && rm -f *.gz
+RUN sudo -u ubuntu mkdir -p /home/ubuntu/.jenv/versions && sudo chown ubuntu:ubuntu /var/lib/apt/lists/partial && sudo -E -u ubuntu /home/ubuntu/.jenv/bin/jenv add /opt/jdk-17.0.8/
 
 ## Download latest BurpSuite pro and its LoaderKeygen
 RUN sudo -u ubuntu mkdir -p /home/ubuntu/apps/BurpSuite && burpsuite_pro_latest_version=$(curl -s https://portswigger.net/burp/releases | grep -oP "Professional \/ Community \K([\d\.]+)" | head -n 1) && sudo -u ubuntu wget "https://portswigger-cdn.net/burp/releases/download?product=pro&version=${burpsuite_pro_latest_version}&type=Jar" -O /home/ubuntu/apps/BurpSuite/burpsuite_pro_v${burpsuite_pro_latest_version}.jar && burploader_latest_release_url=$(curl -s -H "Accept: application/vnd.github+json" https://api.github.com/repos/h3110w0r1d-y/BurpLoaderKeygen/releases/latest | grep 'browser_' | cut -d\" -f4 | awk 'NR==1') && sudo -u ubuntu wget "$burploader_latest_release_url" -P /home/ubuntu/apps/BurpSuite/ 
