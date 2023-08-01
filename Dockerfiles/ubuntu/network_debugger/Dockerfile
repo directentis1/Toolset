@@ -42,7 +42,7 @@ RUN sudo -u ubuntu mkdir -p /home/ubuntu/.jenv/versions && sudo chown ubuntu:ubu
 ## Download latest BurpSuite pro and its LoaderKeygen
 RUN sudo -u ubuntu mkdir -p /home/ubuntu/apps/BurpSuite && burpsuite_pro_latest_version=$(curl -s https://portswigger.net/burp/releases | grep -oP "Professional \/ Community \K([\d\.]+)" | head -n 1) && sudo -u ubuntu wget "https://portswigger-cdn.net/burp/releases/download?product=pro&version=${burpsuite_pro_latest_version}&type=Jar" -O /home/ubuntu/apps/BurpSuite/burpsuite_pro_v${burpsuite_pro_latest_version}.jar && burploader_latest_release_url=$(curl -s -H "Accept: application/vnd.github+json" https://api.github.com/repos/h3110w0r1d-y/BurpLoaderKeygen/releases/latest | grep 'browser_' | cut -d\" -f4 | awk 'NR==1') && sudo -u ubuntu wget "$burploader_latest_release_url" -P /home/ubuntu/apps/BurpSuite/ 
 #** sudo chown -R ubuntu:ubuntu /home/ubuntu/apps/BurpSuite **# --> It'll be took as the same as storage of the BurpSuite folder after do that command, so it'll better if I do combine it with the command above
-RUN sudo -u ubuntu echo "oracle64-17.0.7" >> /home/ubuntu/apps/BurpSuite/.java-version
+RUN sudo -u ubuntu echo "oracle64-17.0.8" >> /home/ubuntu/apps/BurpSuite/.java-version
 
 # Add latest mitmproxy
 RUN mitmproxy_latest_release_url=$(curl -s -H "Accept: application/vnd.github+json" https://api.github.com/repos/mitmproxy/mitmproxy/releases/latest | grep 'tag_name' | cut -d\" -f4) \
