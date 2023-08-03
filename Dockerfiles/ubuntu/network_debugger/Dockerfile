@@ -74,6 +74,10 @@ RUN bash -c "$(curl -sSL https://gist.githubusercontent.com/directentis1/5dc79a9
 RUN sudo -u ubuntu wget https://gist.githubusercontent.com/directentis1/2540b19361acf3c8e0fcf4961b45daef/raw/362935eec64d6d6f79a23302c2eafda82d44c3ca/networkminer_installer.sh -P /home/ubuntu/apps/
 RUN sudo -u ubuntu chmod 755 /home/ubuntu/apps/networkminer_installer.sh
 
+### Get Latest ZAProxy Installer ###
+RUN sudo -u ubuntu wget https://gist.githubusercontent.com/directentis1/0f7c9f772013cfea9ab9d3d6056ad608/raw/eeefc138844568effe43cb7a48c5ec8c3a5e286a/zaproxy_installer.sh -P /home/ubuntu/apps/
+RUN sudo -u ubuntu chmod 755 /home/ubuntu/apps/zaproxy_installer.sh
+
 ### Get Latest Postman Installer ###
 RUN sudo -u ubuntu wget https://gist.githubusercontent.com/directentis1/eaf809a6bdd82bc8500964c195b16ee6/raw/a0972ccd4419c4ecd0fa3c8d7b2c4a5dd120bbf1/postman_installer.sh -P /home/ubuntu/apps/
 RUN sudo -u ubuntu chmod 755 /home/ubuntu/apps/postman_installer.sh
