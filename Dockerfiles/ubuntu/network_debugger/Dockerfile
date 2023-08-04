@@ -45,7 +45,7 @@ RUN sudo -u ubuntu mkdir -p /home/ubuntu/apps/BurpSuite && burpsuite_pro_latest_
 ### The author of this loader temporary disabled (or deleted) it from their github repos, so, I'll use my backup ###
 ### burploader_latest_release_url=$(curl -s -H "Accept: application/vnd.github+json" https://api.github.com/repos/h3110w0r1d-y/BurpLoaderKeygen/releases/latest | grep 'browser_' | cut -d\" -f4 | awk 'NR==1') && sudo -u ubuntu wget "$burploader_latest_release_url" -P /home/ubuntu/apps/BurpSuite/ 
 #** sudo chown -R ubuntu:ubuntu /home/ubuntu/apps/BurpSuite **# --> It'll be took as the same as storage of the BurpSuite folder after do that command, so it'll better if I do combine it with the command above
-RUN sudo -u ubuntu echo "oracle64-$(ls /opt/ | grep "^jdk-" | cut -f2 -d'-')" >> /home/ubuntu/apps/BurpSuite/.java-version
+RUN sudo -u ubuntu echo "oracle64"-$(ls /opt/ | grep "^jdk-" | cut -f2 -d'-') >> /home/ubuntu/apps/BurpSuite/.java-version
 
 # Add latest mitmproxy
 RUN mitmproxy_latest_release_url=$(curl -s -H "Accept: application/vnd.github+json" https://api.github.com/repos/mitmproxy/mitmproxy/releases/latest | grep 'tag_name' | cut -d\" -f4) \
