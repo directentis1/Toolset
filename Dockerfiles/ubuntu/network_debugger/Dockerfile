@@ -94,6 +94,9 @@ RUN sudo -u ubuntu wget https://gist.githubusercontent.com/directentis1/53132758
 ### Get latest reqable installer ###
 RUN sudo -u ubuntu wget https://gist.githubusercontent.com/directentis1/c3f26086016f2ca33fb2db81c9ec4dca/raw/24d68e43ee7b210b09e53a5274a15bab6d93d5b3/reqable_installer.sh -P /home/ubuntu/apps && sudo -u ubuntu chmod 755 /home/ubuntu/apps/reqable_installer.sh
 
+### Get apifox installer ###
+RUN sudo -u ubuntu wget https://gist.githubusercontent.com/directentis1/85262bc10eaf4f30033b65d612feefd5/raw/8f312b320ae946af2ea242ab025b501316690430/apifox_deb_installer.sh -P /home/ubuntu/apps && sudo -u ubuntu chmod 755 /home/ubuntu/apps/apifox_deb_installer.sh
+
 # Misc
 ## Peer-to-peer download tools
 WORKDIR /tmp/
