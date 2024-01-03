@@ -104,9 +104,9 @@ RUN curl https://getcroc.schollz.com | sudo bash \
 \
 && wget -qO - portal.spatiumportae.com | sudo bash \
 \
-&& wormholers_latest_release_url=$(curl -s -H "Accept: application/vnd.github+json" https://api.github.com/repos/magic-wormhole/magic-wormhole.rs/releases/latest | grep 'browser_' | cut -d\" -f4 | awk 'NR==1') \
-    && sudo wget -O /usr/local/bin/wormhole-rs "$wormholers_latest_release_url" && sudo chmod 755 /usr/local/bin/wormhole-rs \
 && sudo rm -rf /tmp/*
+# && wormholers_latest_release_url=$(curl -s -H "Accept: application/vnd.github+json" https://api.github.com/repos/magic-wormhole/magic-wormhole.rs/releases/latest | grep 'browser_' | cut -d\" -f4 | awk 'NR==1') \
+#     && sudo wget -O /usr/local/bin/wormhole-rs "$wormholers_latest_release_url" && sudo chmod 755 /usr/local/bin/wormhole-rs \
 
 # Post-stage
 ## Cleaning
