@@ -49,7 +49,7 @@ RUN sudo -u ubuntu echo "oracle64"-$(ls /opt/ | grep "^jdk-" | cut -f2 -d'-') >>
 
 # Add latest mitmproxy
 RUN mitmproxy_latest_release_url=$(curl -s -H "Accept: application/vnd.github+json" https://api.github.com/repos/mitmproxy/mitmproxy/releases/latest | grep 'tag_name' | cut -d\" -f4) \
-&& sudo -u ubuntu wget "https://downloads.mitmproxy.org/${mitmproxy_latest_release_url}/mitmproxy-${mitmproxy_latest_release_url}-linux.tar.gz" -P /tmp/ && sudo -u ubuntu mkdir /home/ubuntu/apps/mitmproxy && sudo -u ubuntu tar -xf /tmp/mitmproxy-*.tar.gz -C /home/ubuntu/apps/mitmproxy && sudo rm -rf /tmp/*
+&& sudo -u ubuntu wget "https://downloads.mitmproxy.org/${mitmproxy_latest_release_url}/mitmproxy-${mitmproxy_latest_release_url}-linux-x86_64.tar.gz" -P /tmp/ && sudo -u ubuntu mkdir /home/ubuntu/apps/mitmproxy && sudo -u ubuntu tar -xf /tmp/mitmproxy-*.tar.gz -C /home/ubuntu/apps/mitmproxy && sudo rm -rf /tmp/*
 
 # Add Charles
 RUN wget -qO- https://www.charlesproxy.com/packages/apt/charles-repo.asc | sudo tee /etc/apt/keyrings/charles-repo.asc && sudo sh -c 'echo deb [signed-by=/etc/apt/keyrings/charles-repo.asc] https://www.charlesproxy.com/packages/apt/ charles-proxy main > /etc/apt/sources.list.d/charles.list' && sudo apt-get update && sudo apt-get install charles-proxy
