@@ -34,9 +34,16 @@ RUN wget https://api.getfiddler.com/linux/latest-linux -O fidder-everywhere-late
 
 
 # Add Burp Suite Pro 
-## Install jenv tool and download oracle java-17 and add it with jenv
+## Install jenv tool and download oracle java-21 and add it with jenv
 RUN sudo -u ubuntu git clone https://github.com/jenv/jenv.git /home/ubuntu/.jenv && sudo -u ubuntu echo 'export PATH="$HOME/.jenv/bin:$PATH"' >> /home/ubuntu/.bash_profile && sudo -u ubuntu echo 'eval "$(jenv init -)"' >> /home/ubuntu/.bash_profile
-RUN cd /tmp/ && wget https://download.oracle.com/java/17/latest/jdk-17_linux-x64_bin.tar.gz && sudo tar -xf jdk-17_linux-x64_bin.tar.gz -C /opt/ && sudo chmod -R 755 /opt/jdk-* && rm -f *.gz
+
+### Java 17 was the last version supported by Burp in the version 2024.1.1.6.
+## Java 21 is required for later updates.
+## See more: [It no longer works in the latest versions, will we have an update from you soon? · Issue #13 · h3110w0r1d-y/BurpLoaderKeygen](https://github.com/h3110w0r1d-y/BurpLoaderKeygen/issues/13)
+## RUN cd /tmp/ && wget https://download.oracle.com/java/17/latest/jdk-17_linux-x64_bin.tar.gz && sudo tar -xf jdk-17_linux-x64_bin.tar.gz -C /opt/ && sudo chmod -R 755 /opt/jdk-* && rm -f *.gz
+
+RUN cd /tmp/ && wget https://download.oracle.com/java/21/latest/jdk-21_linux-x64_bin.tar.gz && sudo tar -xf jdk-21_linux-x64_bin.tar.gz -C /opt/ && sudo chmod -R 755 /opt/jdk-* && rm -f *.gz
+
 RUN sudo -u ubuntu mkdir -p /home/ubuntu/.jenv/versions && sudo chown ubuntu:ubuntu /var/lib/apt/lists/partial && sudo -E -u ubuntu /home/ubuntu/.jenv/bin/jenv add /opt/jdk-*/
 
 ## Download latest BurpSuite pro and its LoaderKeygen
