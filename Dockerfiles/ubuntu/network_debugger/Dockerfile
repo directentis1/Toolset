@@ -55,7 +55,7 @@ RUN sudo -u ubuntu mkdir -p /home/ubuntu/apps/BurpSuite && burpsuite_pro_latest_
 RUN sudo -u ubuntu echo "oracle64"-$(ls /opt/ | grep "^jdk-" | cut -f2 -d'-') >> /home/ubuntu/apps/BurpSuite/.java-version
 
 # Add latest mitmproxy
-RUN mitmproxy_latest_release_url=$(curl -s -H "Accept: application/vnd.github+json" https://api.github.com/repos/mitmproxy/mitmproxy/releases/latest | grep 'tag_name' | cut -d\" -f4) \
+RUN mitmproxy_latest_release_url=$(curl -s -H "Accept: application/vnd.github+json" https://api.github.com/repos/mitmproxy/mitmproxy/releases/latest | grep 'tag_name' | cut -d\" -f4 | egrep -o "[0-9\.]*") \
 && sudo -u ubuntu wget "https://downloads.mitmproxy.org/${mitmproxy_latest_release_url}/mitmproxy-${mitmproxy_latest_release_url}-linux-x86_64.tar.gz" -P /tmp/ && sudo -u ubuntu mkdir /home/ubuntu/apps/mitmproxy && sudo -u ubuntu tar -xf /tmp/mitmproxy-*.tar.gz -C /home/ubuntu/apps/mitmproxy && sudo rm -rf /tmp/*
 
 # Add Charles
