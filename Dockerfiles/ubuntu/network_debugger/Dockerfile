@@ -10,7 +10,7 @@ FROM thuonghai2711/ubuntu-novnc-pulseaudio:22.04
 WORKDIR /var/lib/apt/lists/partial
 RUN sudo add-apt-repository ppa:wireshark-dev/stable -y
 RUN sudo apt-get update \
-    && sudo apt-get install -y --no-install-recommends libglib2.0-0  libnss3  libatk1.0-0  libatk-bridge2.0-0  cups libdrm2  libgtk-3-0  libgbm1 libasound2 git openssh-server openssh-client ca-certificates libsecret-1-0 libsecret-common bash iproute2 libpcap-dev libusb-1.0-0-dev libnetfilter-queue-dev wireless-tools firefox libu2f-udev file-roller nano fuse fuse3 \
+    && sudo apt-get install -y --no-install-recommends libglib2.0-0  libnss3  libatk1.0-0  libatk-bridge2.0-0  cups libdrm2  libgtk-3-0  libgbm1 libasound2 git openssh-server openssh-client ca-certificates libsecret-1-0 libsecret-common bash iproute2 libpcap-dev libusb-1.0-0-dev libnetfilter-queue-dev wireless-tools firefox libu2f-udev file-roller nano fuse \
     && sudo apt-get autoclean -y && sudo apt-get autoremove -y \
     && sudo rm -rf /var/cache/apt/*
 
