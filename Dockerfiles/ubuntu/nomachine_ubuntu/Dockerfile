@@ -1,8 +1,12 @@
-FROM ubuntu:jammy
+FROM ubuntu:noble
 SHELL ["/usr/bin/bash", "-c"]
 ENV LANG=en_US.UTF-8
-ENV HOSTNAME="Jammy"
-ENV USER=ubuntu PASSWORD="!2345678a" GID=1001 UID=1001
+ENV HOSTNAME="Noble"
+
+# 20240819.234536 For somewhat reason, ubuntu user id has been set before root user in ubuntu:noble docker image
+# nx user id will be took incremental id - 1001
+# so, to avoid config, we must set it to other value, let's say 1002
+ENV USER=ubuntu PASSWORD="!2345678a" GID=1002 UID=1002
 ENV NX_PUBLICKEY=""
 
 # Update package lists and installing essential packages
@@ -43,7 +47,7 @@ RUN apt-get update \
         systemd systemd-sysv \
         tzdata \
         unzip \
-        vim \
+        neovim \
         wget \
         curl \
         psmisc \
@@ -75,13 +79,13 @@ WORKDIR /tmp/
 ## Install and configure nomachine server
 ### Other nomachine products (for evaluations):
 ## - Free Desktop: "https://www.nomachine.com/free/linux/64/deb"
-## - Workstation: "https://download.nomachine.com/packages/8.11-PRODUCTION/Linux/nomachine-workstation_8.11.3_4_amd64.deb"
-## - Terminal Server: "https://download.nomachine.com/packages/8.11-PRODUCTION/Linux/nomachine-terminal-server_8.11.3_4_amd64.deb"
-## - Enterprise Terminal Server: "https://download.nomachine.com/packages/8.11-PRODUCTION/Linux/nomachine-enterprise-terminal-server_8.11.3_4_amd64.deb"
-## - Cloud Server: "https://download.nomachine.com/packages/8.11-PRODUCTION/Linux/nomachine-cloud-server_8.11.3_4_amd64.deb"
-## - Enterprise Cloud Server: "https://download.nomachine.com/packages/8.11-PRODUCTION/Linux/nomachine-enterprise-cloud-server_8.11.3_4_amd64.deb"
+## - Workstation: "https://download.nomachine.com/packages/8.13-PRODUCTION/Linux/nomachine-workstation_8.13.1_1_amd64.deb"
+## - Terminal Server: "https://download.nomachine.com/packages/8.13-PRODUCTION/Linux/nomachine-terminal-server_8.13.1_1_amd64.deb"
+## - Enterprise Terminal Server: "https://download.nomachine.com/packages/8.13-PRODUCTION/Linux/nomachine-enterprise-terminal-server_8.13.1_1_amd64.deb"
+## - Cloud Server: "https://download.nomachine.com/packages/8.13-PRODUCTION/Linux/nomachine-cloud-server_8.13.1_1_amd64.deb"
+## - Enterprise Cloud Server: "https://download.nomachine.com/packages/8.13-PRODUCTION/Linux/nomachine-enterprise-cloud-server_8.13.1_1_amd64.deb"
 
-RUN curl -fSL "https://download.nomachine.com/packages/8.11-PRODUCTION/Linux/nomachine-enterprise-terminal-server_8.11.3_4_amd64.deb" -o nomachine.deb && dpkg -i nomachine.deb && rm -f nomachine.deb \
+RUN curl -fSL "https://download.nomachine.com/packages/8.13-PRODUCTION/Linux/nomachine-enterprise-terminal-server_8.13.1_1_amd64.deb" -o nomachine.deb && dpkg -i nomachine.deb && rm -f nomachine.deb \
     && sed -i -e "s|#EnableClipboard both|EnableClipboard both|g" \
     -e "s|#EnableUPnP none|EnableUPnP NXUDP|g" \
     -e "s|#NXUDPPort 4000|NXUDPPort 4000|g" \
@@ -97,24 +101,29 @@ RUN curl -fSL "https://download.nomachine.com/packages/8.11-PRODUCTION/Linux/nom
 
 
 ## Install Firefox for Linux from Mozilla PPA
-RUN add-apt-repository ppa:mozillateam/ppa -y && cat <<'FOT' > /etc/apt/preferences.d/mozilla-firefox && cat <<'FOT2' > /etc/apt/apt.conf.d/51unattended-upgrades-firefox && apt update && DEBIAN_FRONTEND="noninteractive" apt install firefox -y --no-install-recommends && rm -rf /var/lib/apt/lists/* && apt-get clean; apt-get autoremove -y; apt-get autoclean
-Package: *
-Pin: release o=LP-PPA-mozillateam
-Pin-Priority: 1001
-FOT
-Unattended-Upgrade::Allowed-Origins:: "LP-PPA-mozillateam:jammy";
-FOT2
+# RUN add-apt-repository ppa:mozillateam/ppa -y && cat <<'FOT' > /etc/apt/preferences.d/mozilla-firefox && cat <<'FOT2' > /etc/apt/apt.conf.d/51unattended-upgrades-firefox && apt update && DEBIAN_FRONTEND="noninteractive" apt install firefox -y --no-install-recommends && rm -rf /var/lib/apt/lists/* && apt-get clean; apt-get autoremove -y; apt-get autoclean
+# Package: *
+# Pin: release o=LP-PPA-mozillateam
+# Pin-Priority: 1001
+# FOT
+# Unattended-Upgrade::Allowed-Origins:: "LP-PPA-mozillateam:jammy";
+# FOT2
+
+## Install Firefox for Linux from offical Mozilla Repository
+## Source: https://support.mozilla.org/en-US/kb/install-firefox-linux#w_install-firefox-deb-package-for-debian-based-distributions
+
+RUN install -d -m 0755 /etc/apt/keyrings && wget -q https://packages.mozilla.org/apt/repo-signing-key.gpg -O- | tee /etc/apt/keyrings/packages.mozilla.org.asc > /dev/null && echo "deb [signed-by=/etc/apt/keyrings/packages.mozilla.org.asc] https://packages.mozilla.org/apt mozilla main" | tee -a /etc/apt/sources.list.d/mozilla.list > /dev/null && echo -e 'Package: *\nPin: origin packages.mozilla.org\nPin-Priority: 1000\n' | tee /etc/apt/preferences.d/mozilla && apt update && DEBIAN_FRONTEND="noninteractive" apt install firefox -y --no-install-recommends && rm -rf /var/lib/apt/lists/* && apt-get clean; apt-get autoremove -y; apt-get autoclean 
 
 
 ## Install Chromium-based browser(s)
 
 ### Google Chrome
-RUN apt-get update && wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb \
-    && sudo apt install -y ./google-chrome-stable_current_amd64.deb; \
-    sudo apt install --assume-yes --fix-broken --no-install-recommends; \
-    rm -f google-chrome-stable_current_amd64.deb \
-    && rm -rf /var/lib/apt/lists/* \
-    && apt-get clean; apt-get autoclean
+# RUN apt-get update && wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb \
+#     && sudo apt install -y ./google-chrome-stable_current_amd64.deb; \
+#     sudo apt install --assume-yes --fix-broken --no-install-recommends; \
+#     rm -f google-chrome-stable_current_amd64.deb \
+#     && rm -rf /var/lib/apt/lists/* \
+#     && apt-get clean; apt-get autoclean
 
 ### Vivaldi
 RUN lastest_stable_vivaldi_browser_version=$(curl -sL repo.vivaldi.com/stable/deb/pool/main/ | grep -Eo "[A-Za-z0-9\._-]*(\.deb)" | grep stable | grep amd64 | sort -u | tail -1) \
@@ -128,11 +137,11 @@ RUN lastest_stable_vivaldi_browser_version=$(curl -sL repo.vivaldi.com/stable/de
     && apt-get clean; apt-get autoclean 
 
 ### Brave
-RUN curl -fsSLo /usr/share/keyrings/brave-browser-archive-keyring.gpg https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-keyring.gpg && \
-    echo "deb [signed-by=/usr/share/keyrings/brave-browser-archive-keyring.gpg] https://brave-browser-apt-release.s3.brave.com/ stable main"| tee /etc/apt/sources.list.d/brave-browser-release.list && \
-    apt update; apt install -y brave-browser --no-install-recommends \
-    && rm -rf /var/lib/apt/lists/* \
-    && apt-get clean; apt-get autoclean
+# RUN curl -fsSLo /usr/share/keyrings/brave-browser-archive-keyring.gpg https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-keyring.gpg && \
+#     echo "deb [signed-by=/usr/share/keyrings/brave-browser-archive-keyring.gpg] https://brave-browser-apt-release.s3.brave.com/ stable main"| tee /etc/apt/sources.list.d/brave-browser-release.list && \
+#     apt update; apt install -y brave-browser --no-install-recommends \
+#     && rm -rf /var/lib/apt/lists/* \
+#     && apt-get clean; apt-get autoclean
 
 
 ## Some utilities
@@ -146,7 +155,6 @@ RUN curl https://getcroc.schollz.com | bash; \
 
 
 EXPOSE 4000
-EXPOSE 4443
 VOLUME ["/home/nomachine"]
 
 # post-script and entrypoint
