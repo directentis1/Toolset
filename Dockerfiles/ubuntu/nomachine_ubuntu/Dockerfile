@@ -5,7 +5,7 @@ ENV HOSTNAME="Noble"
 
 # 20240819.234536 For somewhat reason, ubuntu user id has been set before root user in ubuntu:noble docker image
 # nx user id will be took incremental id - 1001
-# so, to avoid config, we must set it to other value, let's say 1002
+# so, to avoid conflict, we must set it to other value, let's say 1002
 ENV USER=ubuntu PASSWORD="!2345678a" GID=1002 UID=1002
 ENV NX_PUBLICKEY=""
 
@@ -111,7 +111,6 @@ RUN curl -fSL "https://download.nomachine.com/packages/8.13-PRODUCTION/Linux/nom
 
 ## Install Firefox for Linux from offical Mozilla Repository
 ## Source: https://support.mozilla.org/en-US/kb/install-firefox-linux#w_install-firefox-deb-package-for-debian-based-distributions
-
 RUN install -d -m 0755 /etc/apt/keyrings && wget -q https://packages.mozilla.org/apt/repo-signing-key.gpg -O- | tee /etc/apt/keyrings/packages.mozilla.org.asc > /dev/null && echo "deb [signed-by=/etc/apt/keyrings/packages.mozilla.org.asc] https://packages.mozilla.org/apt mozilla main" | tee -a /etc/apt/sources.list.d/mozilla.list > /dev/null && echo -e 'Package: *\nPin: origin packages.mozilla.org\nPin-Priority: 1000\n' | tee /etc/apt/preferences.d/mozilla && apt update && DEBIAN_FRONTEND="noninteractive" apt install firefox -y --no-install-recommends && rm -rf /var/lib/apt/lists/* && apt-get clean; apt-get autoremove -y; apt-get autoclean 
 
 
@@ -155,6 +154,7 @@ RUN curl https://getcroc.schollz.com | bash; \
 
 
 EXPOSE 4000
+EXPOSE 4443
 VOLUME ["/home/nomachine"]
 
 # post-script and entrypoint
