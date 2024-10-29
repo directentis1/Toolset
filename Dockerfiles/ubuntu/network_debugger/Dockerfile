@@ -105,7 +105,7 @@ RUN sudo -u ubuntu wget https://gist.githubusercontent.com/directentis1/c3f26086
 RUN sudo -u ubuntu wget https://gist.githubusercontent.com/directentis1/85262bc10eaf4f30033b65d612feefd5/raw/8f312b320ae946af2ea242ab025b501316690430/apifox_deb_installer.sh -P /home/ubuntu/apps && sudo -u ubuntu chmod 755 /home/ubuntu/apps/apifox_deb_installer.sh
 
 ### Get latest bruno IDE ###
-RUN sudo -u ubuntu wget https://gist.githubusercontent.com/directentis1/99afffed55515da1ef21284b06876ebc/raw/78a65cf192f48825e7d43c15d2d5b4c707bb82a3/bruno_installer.sh -P /home/ubuntu/apps && sudo -u ubuntu chmod 755 /home/ubuntu/apps/bruno_installer.sh
+RUN sudo -u ubuntu wget https://gist.githubusercontent.com/directentis1/99afffed55515da1ef21284b06876ebc/raw/f854dd2af2642ab85e0ff437eb12ece31f4117fe/bruno_installer.sh -P /home/ubuntu/apps && sudo -u ubuntu chmod 755 /home/ubuntu/apps/bruno_installer.sh
 
 ### Get latest Insomnium (OSS insomnia-fork) ###
 RUN sudo -u ubuntu wget https://gist.githubusercontent.com/directentis1/c643723bb9aaa45b1b3c75206b843ed9/raw/a09d03956ac31af7f71b6912eb48e24a59ec6b7a/insomnium_installer.sh -P /home/ubuntu/apps && sudo -u ubuntu chmod 755 /home/ubuntu/apps/insomnium_installer.sh
