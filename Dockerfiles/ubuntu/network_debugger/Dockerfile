@@ -105,19 +105,19 @@ RUN sudo -u ubuntu wget https://gist.githubusercontent.com/directentis1/c3f26086
 RUN sudo -u ubuntu wget https://gist.githubusercontent.com/directentis1/85262bc10eaf4f30033b65d612feefd5/raw/8f312b320ae946af2ea242ab025b501316690430/apifox_deb_installer.sh -P /home/ubuntu/apps && sudo -u ubuntu chmod 755 /home/ubuntu/apps/apifox_deb_installer.sh
 
 ### Get latest bruno IDE ###
-RUN sudo -u ubuntu wget https://gist.githubusercontent.com/directentis1/99afffed55515da1ef21284b06876ebc/raw/7e1d8f668bcbb04c127013c88a6cbde3cbb49927/bruno_deb_installer.sh -P /home/ubuntu/apps && sudo -u ubuntu chmod 755 /home/ubuntu/apps/bruno_deb_installer.sh
+RUN sudo -u ubuntu wget https://gist.githubusercontent.com/directentis1/99afffed55515da1ef21284b06876ebc/raw/78a65cf192f48825e7d43c15d2d5b4c707bb82a3/bruno_installer.sh -P /home/ubuntu/apps && sudo -u ubuntu chmod 755 /home/ubuntu/apps/bruno_deb_installer.sh
 
 ### Get latest Insomnium (OSS insomnia-fork) ###
-RUN sudo -u ubuntu wget https://gist.githubusercontent.com/directentis1/c643723bb9aaa45b1b3c75206b843ed9/raw/084da9b0fe71f067d7ac939e27ebc7b91ce55e04/insomnium_installer.sh -P /home/ubuntu/apps && sudo -u ubuntu chmod 755 /home/ubuntu/apps/insomnium_installer.sh
+RUN sudo -u ubuntu wget https://gist.githubusercontent.com/directentis1/c643723bb9aaa45b1b3c75206b843ed9/raw/a09d03956ac31af7f71b6912eb48e24a59ec6b7a/insomnium_installer.sh -P /home/ubuntu/apps && sudo -u ubuntu chmod 755 /home/ubuntu/apps/insomnium_installer.sh
 
 ### Get latest Stoplightio Studio ###
-RUN sudo -u ubuntu wget https://gist.githubusercontent.com/directentis1/bfa15d9f656eea5ed9d705fa6b8a8d94/raw/f5a745296e838e1bb16eceb1816410e5a988e91d/stoplightio_installer.sh -P /home/ubuntu/apps && sudo -u ubuntu chmod 755 /home/ubuntu/apps/stoplightio_installer.sh
+RUN sudo -u ubuntu wget https://gist.githubusercontent.com/directentis1/bfa15d9f656eea5ed9d705fa6b8a8d94/raw/f66d444535e5ef6ddbb3a4aa8e808017737e8672/stoplightio_installer.sh -P /home/ubuntu/apps && sudo -u ubuntu chmod 755 /home/ubuntu/apps/stoplightio_installer.sh
 
 ### Get latest Swell API ###
-RUN sudo -u ubuntu wget https://gist.githubusercontent.com/directentis1/769d1488166b40c0ec83cce2f6e406dd/raw/37d70e906a6133fa03239c7aa79d1af58a98aa85/swell_installer.sh -P /home/ubuntu/apps && sudo -u ubuntu chmod 755 /home/ubuntu/apps/swell_installer.sh
+RUN sudo -u ubuntu wget https://gist.githubusercontent.com/directentis1/769d1488166b40c0ec83cce2f6e406dd/raw/858eda8b158f932e87cc3b70a41950fda609fead/swell_installer.sh -P /home/ubuntu/apps && sudo -u ubuntu chmod 755 /home/ubuntu/apps/swell_installer.sh
 
 ### Get latest vrest-ng ###
-RUN sudo -u ubuntu wget https://gist.githubusercontent.com/directentis1/06c15638511e6727f4061b07e32fcb7d/raw/af6c606a62b5f313eb68abada80070a19d3585fa/vrest-ng_installer.sh -P /home/ubuntu/apps && sudo -u ubuntu chmod 755 /home/ubuntu/apps/vrest-ng_installer.sh
+RUN sudo -u ubuntu wget https://gist.githubusercontent.com/directentis1/06c15638511e6727f4061b07e32fcb7d/raw/218461c9bfdcc5513e29c2702fc267028cdc4a56/vrest-ng_installer.sh -P /home/ubuntu/apps && sudo -u ubuntu chmod 755 /home/ubuntu/apps/vrest-ng_installer.sh
 
 # Misc
 ## Peer-to-peer download tools
